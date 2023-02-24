@@ -109,11 +109,6 @@
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
-;; Allow mixed fonts in a buffer
-(add-hook! 'org-mode-hook #'mixed-pitch-mode)
-(add-hook! 'org-mode-hook #'solaire-mode)
-(setq mixed-pitch-variable-pitch-cursor nil)
-
 (after! org
   (custom-set-faces!
     '(org-document-title :height 1.3)
@@ -124,13 +119,4 @@
     '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
     '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
     '(org-level-7 :inherit outline-7 :weight semi-bold)
-    '(org-level-8 :inherit outline-8 :weight semi-bold)
-    ;; Ensure that anything that should be fixed-pitch in org buffers appears that
-    ;; way
-    '(org-block nil :foreground nil :inherit 'fixed-pitch)
-    '(org-code nil   :inherit '(shadow fixed-pitch))
-    '(org-table nil   :inherit '(shadow fixed-pitch))
-    '(org-verbatim nil :inherit '(shadow fixed-pitch))
-    '(org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-    '(org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-    '(org-checkbox nil :inherit 'fixed-pitch)))
+    '(org-level-8 :inherit outline-8 :weight semi-bold)))
