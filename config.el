@@ -119,7 +119,9 @@
     '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
     '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
     '(org-level-7 :inherit outline-7 :weight semi-bold)
-    '(org-level-8 :inherit outline-8 :weight semi-bold)))
+    '(org-level-8 :inherit outline-8 :weight semi-bold))
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                       (:kernel . "python3"))))
 
 ;; Render Jupyter text correctly
 (defun display-ansi-colors ()
