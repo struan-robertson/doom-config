@@ -121,7 +121,12 @@
     '(org-level-7 :inherit outline-7 :weight semi-bold)
     '(org-level-8 :inherit outline-8 :weight semi-bold))
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:kernel . "python3"))))
+                                                       (:kernel . "python3")))
+  (setq org-file-apps
+      '((auto-mode . emacs)
+        ("\\.x?html?\\'" . "xdg-open %s")
+        ("\\.pdf\\'" . "xdg-open, \"%s\"")
+        ("\\.pdf::\\([0-9]+\\)\\'" . "xdg-open \"%s\" -p %1"))))
 
 ;; Render Jupyter text correctly
 (defun display-ansi-colors ()
