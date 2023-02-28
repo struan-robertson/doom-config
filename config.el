@@ -121,7 +121,9 @@
     '(org-level-7 :inherit outline-7 :weight semi-bold)
     '(org-level-8 :inherit outline-8 :weight semi-bold))
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:kernel . "python3"))))
+                                                       (:kernel . "python3")))
+  (delete '("\\.pdf\\'" . default) org-file-apps)
+         (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s")))
 
 ;; Render Jupyter text correctly
 (defun display-ansi-colors ()
