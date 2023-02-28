@@ -49,4 +49,10 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+;; Use jupyter kernel in Org babel source blocks
 (package! jupyter)
+
+;; Automatic toggling of LaTeX fragments
+(package! org-fragtog)
+
+(package! org-appear)

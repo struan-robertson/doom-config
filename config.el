@@ -25,7 +25,7 @@
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 (setq doom-font (font-spec :family "Fira Code" :size 16)
-      doom-variable-pitch-font (font-spec :family "ETBembo" :size 18))
+      doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -109,6 +109,8 @@
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
+;; Org mode configuration
+
 (after! org
   (custom-set-faces!
     '(org-document-title :height 1.3)
@@ -123,10 +125,29 @@
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
   (delete '("\\.pdf\\'" . default) org-file-apps)
-         (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s")))
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
+  (setq org-hide-emphasis-markers t)
+  (setq org-src-fontify-natively t))
 
 ;; Render Jupyter text correctly
 (defun display-ansi-colors ()
   (ansi-color-apply-on-region (point-min) (point-max)))
 
+;; Fix ansi colors returned from Jupyter kernel
 (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
+
+(add-hook 'org-mode-hook 'mixed-pitch-mode)
+
+;; Automatically enter fragtog mode
+(use-package! org-fragtog
+  :after org
+  :hook (org-mode . org-fragtog-mode)
+  )
+
+(use-package! org-appear
+  :after org
+  :hook (org-mode . org-appear-mode)
+  :config (setq
+           org-appear-autolinks t
+           org-appear-autoentities t
+           org-appear-autosubmarkers t ))
