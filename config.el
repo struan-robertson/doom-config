@@ -124,8 +124,8 @@
     '(org-level-8 :inherit outline-8 :weight semi-bold))
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
-  (delete '("\\.pdf\\'" . default) org-file-apps)
-  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
+;;  (delete '("\\.pdf\\'" . default) org-file-apps)
+;;  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
   (setq org-hide-emphasis-markers t)
   (setq org-src-fontify-natively t))
 
@@ -136,7 +136,31 @@
 ;; Fix ansi colors returned from Jupyter kernel
 (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
 
+;; Automatically use mixed pitch mode
 (add-hook 'org-mode-hook 'mixed-pitch-mode)
+
+(defun update-other-buffer ()
+  (interactive)
+  (other-window 1)
+  (revert-buffer nil t)
+  (other-window -1))
+
+(defun org-compile-beamer-and-update-other-buffer ()
+  "Has as a premise that it's run from an org-mode buffer and the
+   other buffer already has the PDF open"
+  (interactive)
+  (org-beamer-export-to-pdf)
+  (update-other-buffer))
+
+(defun org-compile-latex-and-update-other-buffer ()
+  "Has as a premise that it's run from an org-mode buffer and the
+   other buffer already has the PDF open"
+  (interactive)
+  (org-latex-export-to-pdf)
+  (update-other-buffer))
+
+(map! :map org-mode-map
+         "M-p"  'org-compile-latex-and-update-other-buffer)
 
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
