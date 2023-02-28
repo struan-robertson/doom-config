@@ -119,6 +119,7 @@
     '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
     '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
     '(org-level-7 :inherit outline-7 :weight semi-bold)
+<<<<<<< HEAD
     '(org-level-8 :inherit outline-8 :weight semi-bold))
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
@@ -127,6 +128,9 @@
         ("\\.x?html?\\'" . "xdg-open %s")
         ("\\.pdf\\'" . "xdg-open, \"%s\"")
         ("\\.pdf::\\([0-9]+\\)\\'" . "xdg-open \"%s\" -p %1"))))
+=======
+    '(org-level-8 :inherit outline-8 :weight semi-bold)))
+>>>>>>> parent of 4ae1a84... default header args for jupyter src block
 
 ;; Render Jupyter text correctly
 (defun display-ansi-colors ()
