@@ -157,4 +157,4 @@
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
 
-(setq org-cite-global-bibliography '("/home/struan/library.bib"))
+(setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
