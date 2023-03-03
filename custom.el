@@ -26,3 +26,4 @@
  '(org-special-keyword (nil :inherit '(font-lock-comment-face fixed-pitch)))
  '(org-table (nil :inherit '(shadow fixed-pitch)))
  '(org-verbatim (nil :inherit '(shadow fixed-pitch))))
+(put 'customize-variable 'disabled nil)

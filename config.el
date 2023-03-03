@@ -139,28 +139,9 @@
 ;; Automatically use mixed pitch mode
 (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
-(defun update-other-buffer ()
-  (interactive)
-  (other-window 1)
-  (revert-buffer nil t)
-  (other-window -1))
-
-(defun org-compile-beamer-and-update-other-buffer ()
-  "Has as a premise that it's run from an org-mode buffer and the
-   other buffer already has the PDF open"
-  (interactive)
-  (org-beamer-export-to-pdf)
-  (update-other-buffer))
-
-(defun org-compile-latex-and-update-other-buffer ()
-  "Has as a premise that it's run from an org-mode buffer and the
-   other buffer already has the PDF open"
-  (interactive)
-  (org-latex-export-to-pdf)
-  (update-other-buffer))
-
+;; Org export to pdf
 (map! :map org-mode-map
-         "M-p"  'org-compile-latex-and-update-other-buffer)
+         "M-p"  'org-latex-export-to-pdf)
 
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
@@ -175,3 +156,5 @@
            org-appear-autolinks t
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
+
+(setq org-cite-global-bibliography '("/home/struan/library.bib"))
