@@ -68,6 +68,7 @@
   :hook (org-mode . org-fragtog-mode)
   )
 
+;; Automatically enter appear mode
 (use-package! org-appear
   :after org
   :hook (org-mode . org-appear-mode)

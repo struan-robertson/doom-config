@@ -118,6 +118,7 @@ Alternately, use ~C-h o~ to look up a symbol
   :hook (org-mode . org-fragtog-mode)
   )
 
+;; Automatically enter appear mode
 (use-package! org-appear
   :after org
   :hook (org-mode . org-appear-mode)
@@ -127,8 +128,6 @@ Alternately, use ~C-h o~ to look up a symbol
            org-appear-autosubmarkers t ))
 
 #+end_src
-
-*** TODO Spelling
 
 *** Avy
 
@@ -224,8 +223,8 @@ Used for jumping around the buffer
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       ;;(spell +flyspell) ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       (spell +aspell) ; tasing you for misspelling mispelling
+       ;; grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
