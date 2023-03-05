@@ -45,7 +45,8 @@
   (setq org-hide-emphasis-markers t)
   (setq org-src-fontify-natively t)
   (setq org-hide-leading-stars nil
-        org-startup-indented nil)
+        org-startup-indented nil
+        org-startup-folded t)
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 

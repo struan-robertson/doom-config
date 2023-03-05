@@ -57,7 +57,7 @@ Exceptions to this rule:
    - See ~C-h v VARIABLE~ to look up their documentation
  - Setting doom variables (which start with ~doom- or +~ )
 
-Some aditional functions/macros to configure Doom
+Some additional functions/macros to configure Doom
  - ~load!~ -> Load external =*.el= files relative to this one
  - ~use-package!~ -> Configure package
  - ~after!~ -> Run code after a package has loaded
@@ -68,7 +68,7 @@ Some aditional functions/macros to configure Doom
 To get information about any of these functions/macros, move the cursor over the highlighted symbol and press ~K~ to open documentation for it, including demos of how they are used.
 Alternately, use ~C-h o~ to look up a symbol
 
-~gd~ (or ~C-c c d~ for the Emacs way) can be used to jump to defenitions and see how things are implemented
+~gd~ (or ~C-c c d~ for the Emacs way) can be used to jump to definitions and see how things are implemented
 
 *** Org
 
@@ -95,7 +95,8 @@ Alternately, use ~C-h o~ to look up a symbol
   (setq org-hide-emphasis-markers t)
   (setq org-src-fontify-natively t)
   (setq org-hide-leading-stars nil
-        org-startup-indented nil)
+        org-startup-indented nil
+        org-startup-folded t)
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
