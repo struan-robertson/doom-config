@@ -25,7 +25,13 @@
 
 (setq org-directory "~/org/")
 
+;; For redering Jupyter output text correctly
+(defun display-ansi-colors ()
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (after! org
+
+  ;;Appearence
   (custom-set-faces!
     '(org-document-title :height 1.3)
     '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
@@ -36,22 +42,21 @@
     '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
     '(org-level-7 :inherit outline-7 :weight semi-bold)
     '(org-level-8 :inherit outline-8 :weight semi-bold))
+  (setq org-hide-emphasis-markers t)
+  (setq org-src-fontify-natively t)
+  (setq org-hide-leading-stars nil
+        org-startup-indented nil)
+  ;; Automatically use mixed pitch mode
+  (add-hook 'org-mode-hook 'mixed-pitch-mode)
+
+  ;; Global bibliography
+  (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
+
+  ;;Jupyter-python settings
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
-;;  (delete '("\\.pdf\\'" . default) org-file-apps)
-;;  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura %s"))
-  (setq org-hide-emphasis-markers t)
-  (setq org-src-fontify-natively t))
-
-;; Render Jupyter text correctly
-(defun display-ansi-colors ()
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
-;; Fix ansi colors returned from Jupyter kernel
-(add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
-
-;; Automatically use mixed pitch mode
-(add-hook 'org-mode-hook 'mixed-pitch-mode)
+  ;; Fix ansi colors returned from Jupyter kernel
+  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors))
 
 ;; Org export to pdf
 (map! :map org-mode-map
@@ -70,8 +75,6 @@
            org-appear-autolinks t
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
-
-(setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
 
 ;; Use avy to navigate through all open windows
 (setq avy-all-windows t)
