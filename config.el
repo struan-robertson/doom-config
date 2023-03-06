@@ -42,21 +42,21 @@
     '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
     '(org-level-7 :inherit outline-7 :weight semi-bold)
     '(org-level-8 :inherit outline-8 :weight semi-bold))
-  (setq org-hide-emphasis-markers t)
-  (setq org-src-fontify-natively t)
-  (setq org-hide-leading-stars nil
+  (setq! org-hide-emphasis-markers t
+        org-src-fontify-natively t
+        org-hide-leading-stars nil
         org-startup-indented nil
         org-startup-folded t)
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
   ;;Citing
-  (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib")
-        citar-bibliography '("/home/struan/Sync/library.bib")
-        citar-notes-paths '("/home/struan/Sync/Notes"))
+  (setq! citar-bibliography '("/home/struan/Sync/library.bib")
+         citar-notes-paths '("/home/struan/Sync/Notes")
+         org-noter-notes-search-path '("/home/struan/Sync/Notes")
 
   ;;Jupyter-python settings
-  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
   ;; Fix ansi colors returned from Jupyter kernel
   (add-hook 'org-babel-after-execute-hook #'display-ansi-colors))
