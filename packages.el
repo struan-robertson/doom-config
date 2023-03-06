@@ -9,3 +9,6 @@
 
 ;; Automaticaly toggle hiding emphesis markers
 (package! org-appear)
+
+;; Integrate citar with org-roam
+(package! citar-org-roam)

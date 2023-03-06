@@ -63,6 +63,24 @@
 (map! :map org-mode-map
          "M-p"  'org-latex-export-to-pdf)
 
+;; Citar config
+(use-package! citar
+  :after org
+  :config (setq
+           citar-bibliography '("/home/struan/Sync/library.bib")
+           citar-notes-path '("/home/struan/Sync/Roam")))
+
+;; Org-roam config
+
+(use-package! org-roam
+  :after org
+  :config (setq
+           org-roam-directory "~/Sync/Roam"))
+
+(use-package! citar-org-roam
+  :after citar org-roam
+  :config (citar-org-roam-mode))
+
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
   :after org
