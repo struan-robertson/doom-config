@@ -79,7 +79,8 @@
 
 (use-package! citar-org-roam
   :after citar org-roam
-  :config (citar-org-roam-mode))
+  :config (citar-org-roam-mode
+           (setq citar-org-roam-note-title-template "${title}")))
 
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
