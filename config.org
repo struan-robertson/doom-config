@@ -100,10 +100,8 @@ Alternately, use ~C-h o~ to look up a symbol
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
-  ;;Citing
-  (setq! citar-bibliography '("/home/struan/Sync/library.bib")
-         citar-notes-paths '("/home/struan/Sync/Notes")
-         org-noter-notes-search-path '("/home/struan/Sync/Notes")
+  ;; Global bibliography
+  (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
 
   ;;Jupyter-python settings
   (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
