@@ -50,7 +50,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 
 ** Packages
 
-Whenever reconfiguring a package, make sure to wrap the config in an ~after!~ block, otherwise Dooms defaults may override the setting
+Whenever re-configuring a package, make sure to wrap the config in an ~after!~ block, otherwise Dooms defaults may override the setting
 Exceptions to this rule:
  - Setting file/directory variables (like ~org-directory~)
  - Setting variables which explicitly tell you to set them before their package is loaded
@@ -296,7 +296,7 @@ Used for jumping around the buffer
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +jupyter +noter)               ; organize your plain life in plain text
+       (org +jupyter +roam2)               ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
