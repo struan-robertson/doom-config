@@ -93,7 +93,7 @@
   :after org
   :hook (org-mode . org-appear-mode)
   :config (setq
-           org-appear-autolinks t
+           org-appear-autolinks nil
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
 
