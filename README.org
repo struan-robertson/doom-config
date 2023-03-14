@@ -1,0 +1,2 @@
+#+title: Doom Emacs Config
+My [[https://github.com/doomemacs/doomemacs][Doom Emacs]] config files.
