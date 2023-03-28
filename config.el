@@ -46,7 +46,8 @@
         org-src-fontify-natively t
         org-hide-leading-stars nil
         org-startup-indented nil
-        org-startup-folded t)
+        org-startup-folded t
+        org-startup-with-latex-preview t)
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
@@ -57,7 +58,9 @@
   (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:kernel . "python3")))
   ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors))
+  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
+
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)))
 
 ;; Org export to pdf
 (map! :map org-mode-map
