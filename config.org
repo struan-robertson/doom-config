@@ -75,10 +75,6 @@ Alternately, use ~C-h o~ to look up a symbol
 #+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
 
-;; For redering Jupyter output text correctly
-(defun display-ansi-colors ()
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
 (after! org
 
   ;;Appearence
@@ -103,12 +99,6 @@ Alternately, use ~C-h o~ to look up a symbol
 
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
-
-  ;;Jupyter-python settings
-  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:kernel . "python3")))
-  ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
 
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)))
 
@@ -197,7 +187,7 @@ Used for jumping around the buffer
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;;(emoji +unicode)  ; 🙂
+       (emoji +unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -208,20 +198,20 @@ Used for jumping around the buffer
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       ;;tabs              ; a tab bar for Emacs
+       tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
-       workspaces        ; tab emulation, persistence & separate workspaces
+       ;;workspaces        ; tab emulation, persistence & separate workspaces
        zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
+       (format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        ;;multiple-cursors  ; editing in many places at once
@@ -234,7 +224,7 @@ Used for jumping around the buffer
        :emacs
        dired             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
-       ;;ibuffer         ; interactive buffer management
+       ibuffer         ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
@@ -252,11 +242,11 @@ Used for jumping around the buffer
        :tools
        ;;ansible
        (biblio :completion vertico)          ; Writes a PhD for you (citation needed)
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       ;;docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
-       ;;ein               ; tame Jupyter notebooks with emacs
+       docker
+       editorconfig      ; let someone else argue about tabs vs spaces
+       ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
@@ -266,7 +256,7 @@ Used for jumping around the buffer
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
+       rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -318,7 +308,7 @@ Used for jumping around the buffer
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +jupyter +roam2 +dragndrop)               ; organize your plain life in plain text
+       (org +roam2 +dragndrop)               ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -392,7 +382,7 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 ;;; $DOOMDIR/packages.el
 
 ;; Use jupyter-kernel in Org babel source blocks
-(package! jupyter)
+;; (package! jupyter)
 
 ;; Automatic toggling of LaTeX fragments
 (package! org-fragtog)

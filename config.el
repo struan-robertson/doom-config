@@ -25,10 +25,6 @@
 
 (setq org-directory "~/org/")
 
-;; For redering Jupyter output text correctly
-(defun display-ansi-colors ()
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
 (after! org
 
   ;;Appearence
@@ -53,12 +49,6 @@
 
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
-
-  ;;Jupyter-python settings
-  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:kernel . "python3")))
-  ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
 
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)))
 
