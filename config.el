@@ -23,8 +23,6 @@
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
-(after! projectile (setq projectile-project-root-files-bottom-up (remove ".git" projectile-project-root-files-bottom-up)))
-
 (setq org-directory "~/org/")
 
 (after! org

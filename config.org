@@ -70,11 +70,6 @@ Alternately, use ~C-h o~ to look up a symbol
 
 ~gd~ (or ~C-c c d~ for the Emacs way) can be used to jump to definitions and see how things are implemented
 
-*** Projectile
-#+begin_src emacs-lisp :tangle config.el
-(after! projectile (setq projectile-project-root-files-bottom-up (remove ".git" projectile-project-root-files-bottom-up)))
-#+end_src
-
 *** Org
 
 #+begin_src emacs-lisp :tangle config.el
