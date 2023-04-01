@@ -75,6 +75,10 @@ Alternately, use ~C-h o~ to look up a symbol
 #+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
 
+;; For rendering Jupyter ansi output correctly
+(defun display-ansi-colors ()
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (after! org
 
   ;;Appearence
@@ -93,12 +97,21 @@ Alternately, use ~C-h o~ to look up a symbol
         org-hide-leading-stars nil
         org-startup-indented nil
         org-startup-folded t
-        org-startup-with-latex-preview t)
+        org-startup-with-latex-preview t
+        org-edit-src-content-indentation 0
+        org-src-window-setup 'current-window)
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
+
+  ;; Jupyter-python settings
+  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                        (:kernel . "python3")))
+  ;; Fix ansi colors returned from Jupyter kernel
+  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
+
 
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)))
 
@@ -198,7 +211,7 @@ Used for jumping around the buffer
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       tabs              ; a tab bar for Emacs
+       ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
@@ -246,7 +259,7 @@ Used for jumping around the buffer
        ;;direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
-       ein               ; tame Jupyter notebooks with emacs
+       ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
@@ -308,7 +321,7 @@ Used for jumping around the buffer
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +roam2 +dragndrop)               ; organize your plain life in plain text
+       (org +jupyter +roam2 +dragndrop)               ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -382,7 +395,7 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 ;;; $DOOMDIR/packages.el
 
 ;; Use jupyter-kernel in Org babel source blocks
-;; (package! jupyter)
+(package! jupyter)
 
 ;; Automatic toggling of LaTeX fragments
 (package! org-fragtog)

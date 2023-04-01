@@ -2,7 +2,7 @@
 ;;; $DOOMDIR/packages.el
 
 ;; Use jupyter-kernel in Org babel source blocks
-;; (package! jupyter)
+(package! jupyter)
 
 ;; Automatic toggling of LaTeX fragments
 (package! org-fragtog)
