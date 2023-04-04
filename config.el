@@ -23,6 +23,9 @@
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
+;; Disable massive lsp docs
+(setq lsp-ui-doc-enable nil)
+
 (setq org-directory "~/org/")
 
 ;; For rendering Jupyter ansi output correctly

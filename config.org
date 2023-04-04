@@ -1,12 +1,15 @@
 #+title: Config
 
-Doom emacs config
+My literate [[https://github.com/doomemacs/doomemacs][Doom Emacs]] config files.
 
 * Config
+:PROPERTIES:
+:header-args: :tangle config.el
+:END:
 
 ** Variables
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 #+end_src
 
@@ -19,14 +22,14 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
  - ~doom-unicode-font~ -> For unicode glyphys
  - ~doom-serif-font~ -> For the ~fixed-pitch-serif~ face
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Fira Code" :size 16)
       doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 #+end_src
 
 ** Editor
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 (setq user-full-name "Struan Robertson"
       user-mail-address "contact@struanrobertson.co.uk")
 
@@ -46,6 +49,9 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
+
+;; Disable massive lsp docs
+(setq lsp-ui-doc-enable nil)
 #+end_src
 
 ** Packages
@@ -72,7 +78,7 @@ Alternately, use ~C-h o~ to look up a symbol
 
 *** Org
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 (setq org-directory "~/org/")
 
 ;; For rendering Jupyter ansi output correctly
@@ -159,7 +165,7 @@ Alternately, use ~C-h o~ to look up a symbol
 
 Used for jumping around the buffer
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 ;; Use avy to navigate through all open windows
 (setq avy-all-windows t)
 
@@ -178,8 +184,11 @@ Used for jumping around the buffer
 
 
 * Init
+:PROPERTIES:
+:header-args: :tangle init.el
+:END:
 
-#+begin_src emacs-lisp :tangle init.el
+#+begin_src emacs-lisp
 ;;; ~/.doom.d/init.el -*- lexical-binding: t; -*-
 
 (doom! :input
@@ -189,7 +198,7 @@ Used for jumping around the buffer
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       (company +childframe)           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -364,6 +373,9 @@ Used for jumping around the buffer
 
 
 * Packages
+:PROPERTIES:
+:header-args: :tangle packages.el
+:END:
 
 To install a package with Doom you must declare them here and run ~doom sync~ *on the command line*, then restart Emacs for the changes to take effect, or use ~M-x doom/reload~
 
@@ -390,7 +402,7 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
  Doom's packages are pinned to allow a specific commit and updated from release to release. The ~unpin!~ macro allows you to unpin single packages
  ~(unpin! pinned-package another-pinned-package)~
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
@@ -405,5 +417,10 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 
 ;; Integrate citar with org-roam
 (package! citar-org-roam)
-
 #+end_src
+
+
+* Auto Tangle
+;; Local Variables:
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+;; End:
