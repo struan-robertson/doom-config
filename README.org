@@ -417,6 +417,9 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 
 ;; Integrate citar with org-roam
 (package! citar-org-roam)
+
+;; Yuck mode for editing eww files
+(package! yuck-mode)
 #+end_src
 
 

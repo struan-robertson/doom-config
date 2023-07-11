@@ -12,3 +12,6 @@
 
 ;; Integrate citar with org-roam
 (package! citar-org-roam)
+
+;; Yuck mode for editing eww files
+(package! yuck-mode)
