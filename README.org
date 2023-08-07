@@ -79,7 +79,7 @@ Alternately, use ~C-h o~ to look up a symbol
 *** Org
 
 #+begin_src emacs-lisp
-(setq org-directory "~/org/")
+(setq org-directory "~/Sync/Notes")
 
 ;; For rendering Jupyter ansi output correctly
 (defun display-ansi-colors ()
@@ -180,6 +180,13 @@ Used for jumping around the buffer
 (map!
  "C-f" #'avy-goto-char-2
  :nv "C-f" #'avy-goto-char-2)
+#+end_src
+
+*** Julia
+
+#+begin_src emacs
+(setq lsp-julia-package-dir nil)
+(setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
 #+end_src
 
 
@@ -320,7 +327,7 @@ Used for jumping around the buffer
        json              ; At least it ain't XML
        ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
-       julia             ; a better, faster MATLAB
+       (julia +lsp)             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        latex             ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove

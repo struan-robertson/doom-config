@@ -26,7 +26,7 @@
 ;; Disable massive lsp docs
 (setq lsp-ui-doc-enable nil)
 
-(setq org-directory "~/org/")
+(setq org-directory "~/Sync/Notes")
 
 ;; For rendering Jupyter ansi output correctly
 (defun display-ansi-colors ()
@@ -120,3 +120,6 @@
 (map!
  "C-f" #'avy-goto-char-2
  :nv "C-f" #'avy-goto-char-2)
+
+(setq lsp-julia-package-dir nil)
+(setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
