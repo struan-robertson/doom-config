@@ -72,6 +72,12 @@
 (map! :map org-mode-map
          "M-p"  'org-latex-export-to-pdf)
 
+;; Didnt seem to work when coming after citar
+(use-package! org-roam
+  :after org
+  :config (setq
+           org-roam-directory "/home/struan/Sync/Roam"))
+
 ;; Citar config
 (use-package! citar
   :after org
@@ -80,11 +86,6 @@
            citar-notes-path '("/home/struan/Sync/Roam")))
 
 ;; Org-roam config
-
-(use-package! org-roam
-  :after org
-  :config (setq
-           org-roam-directory "~/Sync/Roam"))
 
 (use-package! citar-org-roam
   :after citar org-roam
