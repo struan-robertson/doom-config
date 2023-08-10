@@ -57,7 +57,7 @@
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
   ;; Global bibliography
-  (setq org-cite-global-bibliography '("/home/struan/Sync/library.bib"))
+  (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))
 
   ;; Jupyter-python settings
   (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
@@ -75,22 +75,48 @@
 ;; Didnt seem to work when coming after citar
 (use-package! org-roam
   :after org
-  :config (setq
-           org-roam-directory "/home/struan/Sync/Roam"))
+  :config (setq org-roam-directory "/home/struan/Sync/Roam")
+
+        ;; https://jethrokuan.github.io/org-roam-guide/
+        (setq org-roam-capture-templates
+            '(("m" "main" plain
+                "%?"
+                :if-new (file+head "main/${slug}.org"
+                                    "#+title: ${title}\n")
+                :immediate-finish t
+                :unnarrowed t)
+                ("r" "reference" plain "%?"
+                :if-new
+                (file+head "reference/${title}.org" "#+title: ${title}\n")
+                :immediate-finish t
+                :unnarrowed t)))
+
+                (cl-defmethod org-roam-node-type ((node org-roam-node))
+                "Return the TYPE of NODE."
+                        (condition-case nil
+                                (file-name-nondirectory
+                                        (directory-file-name
+                                                (file-name-directory
+                                                        (file-relative-name (org-roam-node-file node) org-roam-directory))))
+                                (error "")))
+
+                (setq org-roam-node-display-template
+                        (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
 
 ;; Citar config
 (use-package! citar
   :after org
   :config (setq
            citar-bibliography '("/home/struan/Sync/library.bib")
-           citar-notes-path '("/home/struan/Sync/Roam")))
+           citar-notes-path '("/home/struan/Sync/Roam/reference/")))
 
 ;; Org-roam config
 
 (use-package! citar-org-roam
   :after citar org-roam
   :config (citar-org-roam-mode
-           (setq citar-org-roam-note-title-template "${title}")))
+           (setq citar-org-roam-note-title-template "${title}"
+                 citar-org-roam-capture-template-key "r")))
 
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
