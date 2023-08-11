@@ -79,23 +79,21 @@
 
         ;; https://jethrokuan.github.io/org-roam-guide/
         (setq org-roam-capture-templates
-            '(("m" "main" plain
-                "%?"
+              '(("m" "main" plain "%?"
                 :if-new (file+head "main/${slug}.org"
-                                    "#+title: ${title}\n")
+                                   "#+title: ${title}\n")
                 :immediate-finish t
                 :unnarrowed t)
+
                 ("r" "literature note" plain "%?"
-                :if-new
-                (file+head "reference/${title}.org" "#+title: ${title}\n")
+                :if-new (file+head "reference/${title}.org" "#+title: ${title}\n")
                 :immediate-finish t
                 :unnarrowed t)
-                 ("n" "literature note (citation)" plain
-                    "%?"
-                    :target
-                    (file+head
+                ("n" "literature note (citation)" plain "%?"
+                    :if-new (file+head
                     "reference/${citar-citekey}.org"
                     "#+title: ${note-title}\n\n[cite:@${citar-citekey}]")
+                    :immediate-finish t
                     :unnarrowed t)))
 
                 (cl-defmethod org-roam-node-type ((node org-roam-node))
