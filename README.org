@@ -138,11 +138,18 @@ Alternately, use ~C-h o~ to look up a symbol
                                     "#+title: ${title}\n")
                 :immediate-finish t
                 :unnarrowed t)
-                ("r" "reference" plain "%?"
+                ("r" "literature note" plain "%?"
                 :if-new
                 (file+head "reference/${title}.org" "#+title: ${title}\n")
                 :immediate-finish t
-                :unnarrowed t)))
+                :unnarrowed t)
+                 ("n" "literature note (citation)" plain
+                    "%?"
+                    :target
+                    (file+head
+                    "reference/${citar-citekey}.org"
+                    "#+title: ${note-title}\n\n[cite:@${citar-citekey}]")
+                    :unnarrowed t)))
 
                 (cl-defmethod org-roam-node-type ((node org-roam-node))
                 "Return the TYPE of NODE."
@@ -160,7 +167,7 @@ Alternately, use ~C-h o~ to look up a symbol
 (use-package! citar
   :after org
   :config (setq
-           citar-bibliography '("/home/struan/Sync/library.bib")
+           citar-bibliography '("/home/struan/Sync/Roam/biblio.bib")
            citar-notes-path '("/home/struan/Sync/Roam/reference/")))
 
 ;; Org-roam config
@@ -169,7 +176,7 @@ Alternately, use ~C-h o~ to look up a symbol
   :after citar org-roam
   :config (citar-org-roam-mode
            (setq citar-org-roam-note-title-template "${title}"
-                 citar-org-roam-capture-template-key "r")))
+                 citar-org-roam-capture-template-key "n")))
 
 ;; Automatically enter fragtog mode
 (use-package! org-fragtog
