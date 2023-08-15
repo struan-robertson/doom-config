@@ -81,9 +81,28 @@ Alternately, use ~C-h o~ to look up a symbol
 #+begin_src emacs-lisp
 (setq org-directory "~/Sync/Notes")
 
-;; For rendering Jupyter ansi output correctly
-(defun display-ansi-colors ()
+(defun my/display-ansi-colors ()
+  "Render Jupyter ansi output correctly"
   (ansi-color-apply-on-region (point-min) (point-max)))
+
+(defun my/journal-file-title-setup ()
+  "Return the appropriate string for a new journal file."
+  (let ((filename (format-time-string "%Y-%m-%d.org")))
+    (if (file-exists-p (concat "~/Sync/Notes/daily/" filename))
+        "\n* %?" ; If file exists
+        "#+TITLE: %<%Y-%m-%d>\n\n* %?" ; If file does not exist
+      )))
+
+(defun my/open-journal-today ()
+  "Open today's journal file or create it if it doesn't exits."
+ "Open today's journal file or create it if it doesn't exist."
+  (interactive)
+  (let ((journal-dir "/home/struan/Sync/Notes/daily/")
+        (today-filename (format-time-string "%Y-%m-%d.org")))
+    (let ((full-path (concat journal-dir today-filename)))
+      (if (not (file-exists-p full-path))
+          (write-region (concat "#+TITLE: " (format-time-string "%Y-%m-%d") "\n\n* ") nil full-path))
+        (find-file full-path))))
 
 (after! org
 
@@ -109,6 +128,17 @@ Alternately, use ~C-h o~ to look up a symbol
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
+  ;; Open journal
+  (map! :leader
+        "nj" #'my/open-journal-today)
+
+  ;; Capture templates
+  (setq org-capture-templates
+        '(("j" "Journal Entry"
+           plain (file (lambda () (concat "/home/struan/Sync/Notes/daily/"
+                                          (format-time-string "%Y-%m-%d.org"))))
+         (function my/journal-file-title-setup))))
+
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))
 
@@ -116,10 +146,42 @@ Alternately, use ~C-h o~ to look up a symbol
   (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                         (:kernel . "python3")))
   ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
+  (add-hook 'org-babel-after-execute-hook #'my/display-ansi-colors)
 
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5)))
+  ;; Emacs Chess
+  ;; https://web.archive.org/web/20230321080457/https://gist.github.com/salehmu/4188cac7d0d034eda6ea99160e94dc57
+  ;; Called by org-babel-execute-src-block
+  ;; (defun org-babel-execute:chess (body params)
+  ;;   "Display a FEN code with org-babel"
+  ;;   (let* ((output-file (concat (file-name-sans-extension (buffer-file-name)) (format-time-string "%Y-%m-%d_%H-%M-%S")) ))
+  ;;         (cmd (format "python ~/.doom.d/bin/elchess.py %s %s" body output-file)))
+  ;;   (shell-command cmd)
+  ;;   (org-babel-result-to-file (file-name-nondirectory output-file)))
+
+  ;; (setq org-babel-default-header-args:chess
+  ;;       '((:results . "raw")))
+  ;;
+
+(defun org-babel-execute:chess (body params)
+  "Execute a block of Chess code with org-babel.
+This function is called by `org-babel-execute-src-block'."
+
+  (unless (file-exists-p ".chess")
+    (make-directory ".chess" t))
+
+  (let* ((output-file (expand-file-name (format "%s.svg" (secure-hash 'sha1 body)) "./.chess"))
+         (cmd (format "python ~/.doom.d/bin/elchess.py \"%s\" \"%s\" " body output-file)))
+    (message cmd)
+    (shell-command cmd)
+    (org-babel-result-to-file output-file)))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((chess . t)))
+
+  )
 
 ;; Org export to pdf
 (map! :map org-mode-map
@@ -192,6 +254,9 @@ Alternately, use ~C-h o~ to look up a symbol
            org-appear-autosubmarkers t ))
 
 #+end_src
+
+#+RESULTS:
+| (closure ((hook . org-mode-hook) (--dolist-tail--) t) (&rest _) (add-hook 'before-save-hook 'org-encrypt-entries nil t)) | (closure ((hook . org-mode-hook) (--dolist-tail--) t) (&rest _) (add-hook 'before-save-hook 'org-encrypt-entries nil t)) | (closure ((hook . org-mode-hook) (--dolist-tail--) t) (&rest _) (add-hook 'before-save-hook 'org-encrypt-entries nil t)) | er/add-org-mode-expansions | org-appear-mode | org-fragtog-mode | mixed-pitch-mode | +lookup--init-org-mode-handlers-h | (closure ((hook . org-mode-hook) (--dolist-tail--) t) (&rest _) (add-hook 'before-save-hook 'org-encrypt-entries nil t)) | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-fold-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes | #[0 \301\211\207 [imenu-create-index-function org-imenu-get-tree] 2] | doom-disable-show-paren-mode-h | doom-disable-show-trailing-whitespace-h | +org-make-last-point-visible-h | evil-org-mode | toc-org-enable | embrace-org-mode-hook | org-eldoc-load |
 
 *** Avy
 
