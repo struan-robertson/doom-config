@@ -15,3 +15,6 @@
 
 ;; Yuck mode for editing eww files
 (package! yuck-mode)
+
+;; Grammarly LSP
+(package! lsp-grammarly)

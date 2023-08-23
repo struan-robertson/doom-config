@@ -54,6 +54,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 (setq lsp-ui-doc-enable nil)
 #+end_src
 
+
 ** Packages
 
 Whenever re-configuring a package, make sure to wrap the config in an ~after!~ block, otherwise Dooms defaults may override the setting
@@ -281,7 +282,7 @@ Used for jumping around the buffer
 
 *** Julia
 
-#+begin_src emacs
+#+begin_src emacs-lisp
 (setq lsp-julia-package-dir nil)
 (setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
 #+end_src
@@ -524,6 +525,9 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 
 ;; Yuck mode for editing eww files
 (package! yuck-mode)
+
+;; Grammarly LSP
+(package! lsp-grammarly)
 #+end_src
 
 
