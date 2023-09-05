@@ -114,6 +114,8 @@ This function is called by `org-babel-execute-src-block'."
    'org-babel-load-languages
    '((chess . t)))
 
+  (setq org-agenda-files (directory-files-recursively "~/Sync/Notes" "\\.org$"))
+
   )
 
 ;; Org export to pdf
