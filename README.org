@@ -54,6 +54,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom:
 (setq lsp-ui-doc-enable nil)
 #+end_src
 
+
 ** Packages
 
 Whenever re-configuring a package, make sure to wrap the config in an ~after!~ block, otherwise Dooms defaults may override the setting
@@ -171,6 +172,23 @@ This function is called by `org-babel-execute-src-block'."
 
   )
 
+;; Org-roam-ui
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+
 ;; Org export to pdf
 (map! :map org-mode-map
          "M-p"  'org-latex-export-to-pdf)
@@ -266,7 +284,7 @@ Used for jumping around the buffer
 
 *** Julia
 
-#+begin_src emacs
+#+begin_src emacs-lisp
 (setq lsp-julia-package-dir nil)
 (setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
 #+end_src
@@ -498,6 +516,12 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 ;; Use jupyter-kernel in Org babel source blocks
 (package! jupyter)
 
+;; Unpin org-roam for use with org-roam-ui
+(unpin! org-roam)
+
+;; UI for visualising org-roam
+(package! org-roam-ui)
+
 ;; Automatic toggling of LaTeX fragments
 (package! org-fragtog)
 
@@ -509,6 +533,9 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 
 ;; Yuck mode for editing eww files
 (package! yuck-mode)
+
+;; Grammarly LSP
+(package! lsp-grammarly)
 #+end_src
 
 
