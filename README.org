@@ -170,6 +170,23 @@ This function is called by `org-babel-execute-src-block'."
 
   )
 
+;; Org-roam-ui
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+
 ;; Org export to pdf
 (map! :map org-mode-map
          "M-p"  'org-latex-export-to-pdf)
@@ -499,6 +516,12 @@ If the package you are trying to install does not contain a =PACKAGENAME.el= fil
 
 ;; Use jupyter-kernel in Org babel source blocks
 (package! jupyter)
+
+;; Unpin org-roam for use with org-roam-ui
+(unpin! org-roam)
+
+;; UI for visualising org-roam
+(package! org-roam-ui)
 
 ;; Automatic toggling of LaTeX fragments
 (package! org-fragtog)
