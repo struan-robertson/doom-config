@@ -24,3 +24,6 @@
 
 ;; Grammarly LSP
 (package! lsp-grammarly)
+
+;; Just mode syntax highlighting
+(package! just-mode)
