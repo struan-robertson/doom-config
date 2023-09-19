@@ -1,14 +1,22 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;; Doom Config ;;;;;;;;;;;;;;;;;;;
+
+;; Doom fonts
 (setq doom-font (font-spec :family "Fira Code" :size 16)
       doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 
+;; User information
 (setq user-full-name "Struan Robertson"
       user-mail-address "contact@struanrobertson.co.uk")
 
+;; Doom theme
 (setq doom-theme 'doom-nord)
 
+;; Display relative line numbers
 (setq display-line-numbers-type 'relative)
+
+;; Dont display line numbers in text mode
 (remove-hook! 'text-mode-hook
   #'display-line-numbers-mode)
 
@@ -20,12 +28,26 @@
 (setq auto-save-default t
       make-backup-files t)
 
+;; Auto add file to recent files list when using systemd service
+(add-hook 'find-file-hook 'recentf-save-list)
+
+;; Auto save bookmarks file
+(defun bookmark-and-save ()
+  "Bookmark location and then save to bookmarks file"
+  (interactive)
+  (bookmark-set)
+  (bookmark-save))
+(map! :leader "b m" #'bookmark-and-save)
+
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
 ;; Disable massive lsp docs
 (setq lsp-ui-doc-enable nil)
 
+;;;;;;;;;;;;;;;; Org Config ;;;;;;;;;;;;;;;;;;;
+
+;; Default notes directory
 (setq org-directory "~/Sync/Notes")
 
 (defun my/display-ansi-colors ()
@@ -41,7 +63,6 @@
       )))
 
 (defun my/open-journal-today ()
-  "Open today's journal file or create it if it doesn't exits."
  "Open today's journal file or create it if it doesn't exist."
   (interactive)
   (let ((journal-dir "/home/struan/Sync/Notes/daily/")
@@ -50,6 +71,19 @@
       (if (not (file-exists-p full-path))
           (write-region (concat "#+TITLE: " (format-time-string "%Y-%m-%d") "\n\n* ") nil full-path))
         (find-file full-path))))
+
+(defun org-babel-execute:chess (body)
+  "Execute a block of Chess code with org-babel.
+This function is called by `org-babel-execute-src-block'."
+
+  (unless (file-exists-p ".chess")
+    (make-directory ".chess" t))
+
+  (let* ((output-file (expand-file-name (format "%s.svg" (secure-hash 'sha1 body)) "./.chess"))
+         (cmd (format "python ~/.doom.d/bin/elchess.py \"%s\" \"%s\" " body output-file)))
+    (message cmd)
+    (shell-command cmd)
+    (org-babel-result-to-file output-file)))
 
 (after! org
 
@@ -72,6 +106,7 @@
         org-startup-with-latex-preview t
         org-edit-src-content-indentation 0
         org-src-window-setup 'current-window)
+
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
 
@@ -95,25 +130,16 @@
   ;; Fix ansi colors returned from Jupyter kernel
   (add-hook 'org-babel-after-execute-hook #'my/display-ansi-colors)
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  ;; Scale latex
+  ;;(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
-(defun org-babel-execute:chess (body params)
-  "Execute a block of Chess code with org-babel.
-This function is called by `org-babel-execute-src-block'."
-
-  (unless (file-exists-p ".chess")
-    (make-directory ".chess" t))
-
-  (let* ((output-file (expand-file-name (format "%s.svg" (secure-hash 'sha1 body)) "./.chess"))
-         (cmd (format "python ~/.doom.d/bin/elchess.py \"%s\" \"%s\" " body output-file)))
-    (message cmd)
-    (shell-command cmd)
-    (org-babel-result-to-file output-file)))
-
+  ;; Load "chess" language to allow for chess boards to be rendered
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((chess . t)))
 
+  ;; Recursively search for agenda items within the notes directory
+  ;; Shouldnt pose much of a performance issue as the Notes directory wont be as large as roam.
   (setq org-agenda-files (directory-files-recursively "~/Sync/Notes" "\\.org$"))
 
   )
@@ -121,7 +147,6 @@ This function is called by `org-babel-execute-src-block'."
 ;; Org-roam-ui
 (use-package! websocket
     :after org-roam)
-
 (use-package! org-roam-ui
     :after org-roam ;; or :after org
 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
@@ -139,10 +164,12 @@ This function is called by `org-babel-execute-src-block'."
 (map! :map org-mode-map
          "M-p"  'org-latex-export-to-pdf)
 
-;; Didnt seem to work when coming after citar
+;; Org-Roam config
 (use-package! org-roam
   :after org
-  :config (setq org-roam-directory "/home/struan/Sync/Roam")
+  :config
+        ;;Directory containing roam files
+        (setq org-roam-directory "/home/struan/Sync/Roam")
 
         ;; https://jethrokuan.github.io/org-roam-guide/
         (setq org-roam-capture-templates
@@ -181,9 +208,6 @@ This function is called by `org-babel-execute-src-block'."
   :config (setq
            citar-bibliography '("/home/struan/Sync/Roam/biblio.bib")
            citar-notes-path '("/home/struan/Sync/Roam/reference/")))
-
-;; Org-roam config
-
 (use-package! citar-org-roam
   :after citar org-roam
   :config (citar-org-roam-mode
@@ -205,6 +229,9 @@ This function is called by `org-babel-execute-src-block'."
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
 
+
+;;;;;;;;;;;;;;;; Avy Config ;;;;;;;;;;;;;;;;;;;
+
 ;; Use avy to navigate through all open windows
 (setq avy-all-windows t)
 
@@ -219,6 +246,8 @@ This function is called by `org-babel-execute-src-block'."
 (map!
  "C-f" #'avy-goto-char-2
  :nv "C-f" #'avy-goto-char-2)
+
+;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
 (setq lsp-julia-package-dir nil)
 (setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
