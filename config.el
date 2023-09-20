@@ -8,6 +8,7 @@
 
 ;; Spelling dictionary
 (setq ispell-dictionary "british")
+(setq ispell-personal-dictionary "/home/struan/Sync/personal_dictionary.pws")
 
 ;; User information
 (setq user-full-name "Struan Robertson"
