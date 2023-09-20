@@ -6,6 +6,9 @@
 (setq doom-font (font-spec :family "Fira Code" :size 16)
       doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 
+;; Spelling dictionary
+(setq ispell-dictionary "british")
+
 ;; User information
 (setq user-full-name "Struan Robertson"
       user-mail-address "contact@struanrobertson.co.uk")
