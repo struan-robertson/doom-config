@@ -140,9 +140,12 @@ This function is called by `org-babel-execute-src-block'."
 
   ;; Recursively search for agenda items within the notes directory
   ;; Shouldnt pose much of a performance issue as the Notes directory wont be as large as roam.
-  (setq org-agenda-files (directory-files-recursively "~/Sync/Notes" "\\.org$"))
+  (defun refresh-org-agenda-files ()
+    (setq org-agenda-files
+          (directory-files-recursively "~/Sync/Notes" org-agenda-file-regexp)))
+  (add-hook 'org-agenda-mode-hook #'refresh-org-agenda-files)
 
-  )
+)
 
 ;; Org-roam-ui
 (use-package! websocket
