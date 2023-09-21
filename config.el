@@ -257,4 +257,4 @@ This function is called by `org-babel-execute-src-block'."
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
 (setq lsp-julia-package-dir nil)
-(setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
+(setq lsp-julia-flags `("-J/home/struan/Sync/bin/languageserver.so"))
