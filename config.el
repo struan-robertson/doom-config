@@ -45,6 +45,10 @@
 ;; Disable massive lsp docs
 (setq lsp-ui-doc-enable nil)
 
+;; Load ssh-agent
+;; TODO: hacky, should really make systemd import the variable
+(setenv "SSH_AUTH_SOCK" "/run/user/1000/ssh-agent")
+
 ;;;;;;;;;;;;;;;; Org Config ;;;;;;;;;;;;;;;;;;;
 
 ;; Default notes directory
