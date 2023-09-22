@@ -6,6 +6,10 @@
 (setq doom-font (font-spec :family "Fira Code" :size 16)
       doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 
+;; Spelling dictionary
+(setq ispell-dictionary "british")
+(setq ispell-personal-dictionary "/home/struan/Sync/personal_dictionary.pws")
+
 ;; User information
 (setq user-full-name "Struan Robertson"
       user-mail-address "contact@struanrobertson.co.uk")
@@ -144,9 +148,12 @@ This function is called by `org-babel-execute-src-block'."
 
   ;; Recursively search for agenda items within the notes directory
   ;; Shouldnt pose much of a performance issue as the Notes directory wont be as large as roam.
-  (setq org-agenda-files (directory-files-recursively "~/Sync/Notes" "\\.org$"))
+  (defun refresh-org-agenda-files ()
+    (setq org-agenda-files
+          (directory-files-recursively "~/Sync/Notes" org-agenda-file-regexp)))
+  (add-hook 'org-agenda-mode-hook #'refresh-org-agenda-files)
 
-  )
+)
 
 ;; Org-roam-ui
 (use-package! websocket
@@ -254,4 +261,4 @@ This function is called by `org-babel-execute-src-block'."
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
 (setq lsp-julia-package-dir nil)
-(setq lsp-julia-flags `("-J/home/struan/languageserver.so"))
+(setq lsp-julia-flags `("-J/home/struan/Sync/bin/languageserver.so"))
