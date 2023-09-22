@@ -6,6 +6,11 @@
 (setq doom-font (font-spec :family "Fira Code" :size 16)
       doom-variable-pitch-font (font-spec :family "Inter" :size 18))
 
+;; Use Fish shell
+(setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+(setq-default explicit-shell-file-name (executable-find "fish"))
+
 ;; Spelling dictionary
 (setq ispell-dictionary "british")
 (setq ispell-personal-dictionary "/home/struan/Sync/personal_dictionary.pws")
