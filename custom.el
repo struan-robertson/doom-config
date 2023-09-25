@@ -3,6 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("75b2a02e1e0313742f548d43003fcdc45106553af7283fb5fad74359e07fe0e2" "e87fd8e24e82eb94d63b1a9c79abc8161d25de9f2f13b64014d3bf4b8db05e9a" "10e5d4cc0f67ed5cafac0f4252093d2119ee8b8cb449e7053273453c1a1eb7cc" "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" "3cdd0a96236a9db4e903c01cb45c0c111eb1492313a65790adb894f9f1a33b2d" "8c7e832be864674c220f9a9361c851917a93f921fedb7717b1b5ece47690c098" default))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(safe-local-variable-values
    '((eval add-hook 'after-save-hook
       (lambda nil
