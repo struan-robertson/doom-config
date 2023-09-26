@@ -132,7 +132,10 @@ This function is called by `org-babel-execute-src-block'."
         '(("j" "Journal Entry"
            plain (file (lambda () (concat "/home/struan/Sync/Notes/daily/"
                                           (format-time-string "%Y-%m-%d.org"))))
-         (function my/journal-file-title-setup))))
+         (function my/journal-file-title-setup))
+          ("m" "Minutes"
+           plain (file (lambda () (format-time-string "/home/struan/Sync/Notes/Projects/Doctorate/Minutes/%Y-%m-%d/minutes.org")))
+           "#+TITLE: Minutes\n#+DATE: %U\n#+SUBTITLE: %<%d-%m-%Y>\n#+OPTIONS: toc:nil\n\n *Struan, %? in attendance* \n\n\n\n* TODO Actions for next meeting [/]\n  - [ ] ")))
 
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))
