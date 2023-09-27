@@ -146,8 +146,11 @@ This function is called by `org-babel-execute-src-block'."
   ;; Fix ansi colors returned from Jupyter kernel
   (add-hook 'org-babel-after-execute-hook #'my/display-ansi-colors)
 
-  ;; Scale latex
-  ;;(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  ;; Scale latex fragments for laptop, hacky but couldnt think of a way to calculate DPI
+  ;; A potential fix would be to calculate DPI from Hyprland scale factor
+  ;; Higher Hyprland scale = lower latex scale
+  (if (string= (system-name) "nixlaptop")
+      (setq org-format-latex-options (plist-put org-format-latex-options :scale 0.5)))
 
   ;; Load "chess" language to allow for chess boards to be rendered
   (org-babel-do-load-languages
