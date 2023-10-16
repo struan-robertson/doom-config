@@ -273,3 +273,7 @@ This function is called by `org-babel-execute-src-block'."
 
 (setq lsp-julia-package-dir nil)
 (setq lsp-julia-flags `("-J/home/struan/Sync/bin/languageserver.so"))
+(setenv "JULIA_NUM_THREADS" "auto")
+
+(after! julia-repl
+  (julia-repl-set-terminal-backend 'vterm))
