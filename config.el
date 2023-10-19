@@ -277,3 +277,6 @@ This function is called by `org-babel-execute-src-block'."
 
 (after! julia-repl
   (julia-repl-set-terminal-backend 'vterm))
+
+;;;;;;;;;;;;;;;; Python Config ;;;;;;;;;;;;;;;;;;;
+(setenv "PIPENV_VERBOSITY=-1")
