@@ -140,12 +140,6 @@ This function is called by `org-babel-execute-src-block'."
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))
 
-  ;; Jupyter-python settings
-  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                        (:kernel . "python3")))
-  ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'my/display-ansi-colors)
-
   ;; Scale latex fragments for laptop, hacky but couldnt think of a way to calculate DPI
   ;; A potential fix would be to calculate DPI from Hyprland scale factor
   ;; Higher Hyprland scale = lower latex scale
@@ -165,22 +159,6 @@ This function is called by `org-babel-execute-src-block'."
   (add-hook 'org-agenda-mode-hook #'refresh-org-agenda-files)
 
 )
-
-;; Org-roam-ui
-(use-package! websocket
-    :after org-roam)
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-
 
 ;; Org export to pdf
 (map! :map org-mode-map
