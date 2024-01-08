@@ -247,12 +247,12 @@ This function is called by `org-babel-execute-src-block'."
 ;; TODO command to open IPython/Julia REPL in external terminal at current directory
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
-(setq lsp-julia-package-dir nil)
-(setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
-(setenv "JULIA_NUM_THREADS" "auto")
+;; (setq lsp-julia-package-dir nil)
+;; (setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
+;; (setenv "JULIA_NUM_THREADS" "auto")
 
-(after! julia-repl
-  (julia-repl-set-terminal-backend 'vterm))
+;; (after! julia-repl
+  ;; (julia-repl-set-terminal-backend 'vterm))
 
 ;;;;;;;;;;;;;;;; Python Config ;;;;;;;;;;;;;;;;;;;
 (setenv "PIPENV_VERBOSITY" "-1")
