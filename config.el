@@ -63,10 +63,6 @@
 ;; Default notes directory
 (setq org-directory "~/Sync/Notes")
 
-(defun my/display-ansi-colors ()
-  "Render Jupyter ansi output correctly"
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
 (defun my/journal-file-title-setup ()
   "Return the appropriate string for a new journal file."
   (let ((filename (format-time-string "%Y-%m-%d.org")))
@@ -101,16 +97,18 @@ This function is called by `org-babel-execute-src-block'."
 (after! org
 
   ;;Appearence
-  (custom-set-faces!
-    '(org-document-title :height 1.3)
-    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
-    '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
-    '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
-    '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
-    '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
-    '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
-    '(org-level-7 :inherit outline-7 :weight semi-bold)
-    '(org-level-8 :inherit outline-8 :weight semi-bold))
+  (custom-theme-set-faces!
+    'doom-nord
+    '(org-document-title :inherit outline-1 :height 1.5 :family "Inter Display" :weight extra-bold)
+    '(org-level-1 :inherit outline-1 :height 1.75 :family "Inter Display" :weight extra-bold)
+    '(org-level-2 :inherit outline-2 :height 1.15 :family "Inter Display" :weight bold)
+    '(org-level-3 :inherit outline-3 :height 1.12 :family "Inter Display" :weight bold)
+    '(org-level-4 :inherit outline-4 :height 1.09 :family "Inter Display" :weight bold)
+    '(org-level-5 :inherit outline-5 :height 1.06 :family "Inter Display" :weight semi-bold)
+    '(org-level-6 :inherit outline-6 :height 1.03 :family "Inter Display" :weight semi-bold)
+    '(org-level-7 :inherit outline-7 :family "Inter Display" :weight semi-bold)
+    '(org-level-8 :inherit outline-7 :family "Inter Display" :weight semi-bold))
+
   (setq! org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-hide-leading-stars nil
@@ -140,12 +138,6 @@ This function is called by `org-babel-execute-src-block'."
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))
 
-  ;; Jupyter-python settings
-  (setq! org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                        (:kernel . "python3")))
-  ;; Fix ansi colors returned from Jupyter kernel
-  (add-hook 'org-babel-after-execute-hook #'my/display-ansi-colors)
-
   ;; Scale latex fragments for laptop, hacky but couldnt think of a way to calculate DPI
   ;; A potential fix would be to calculate DPI from Hyprland scale factor
   ;; Higher Hyprland scale = lower latex scale
@@ -165,22 +157,6 @@ This function is called by `org-babel-execute-src-block'."
   (add-hook 'org-agenda-mode-hook #'refresh-org-agenda-files)
 
 )
-
-;; Org-roam-ui
-(use-package! websocket
-    :after org-roam)
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-
 
 ;; Org export to pdf
 (map! :map org-mode-map
@@ -273,12 +249,12 @@ This function is called by `org-babel-execute-src-block'."
 ;; TODO command to open IPython/Julia REPL in external terminal at current directory
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
-(setq lsp-julia-package-dir nil)
-(setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
-(setenv "JULIA_NUM_THREADS" "auto")
+;; (setq lsp-julia-package-dir nil)
+;; (setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
+;; (setenv "JULIA_NUM_THREADS" "auto")
 
-(after! julia-repl
-  (julia-repl-set-terminal-backend 'vterm))
+;; (after! julia-repl
+  ;; (julia-repl-set-terminal-backend 'vterm))
 
 ;;;;;;;;;;;;;;;; Python Config ;;;;;;;;;;;;;;;;;;;
 (setenv "PIPENV_VERBOSITY" "-1")
