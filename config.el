@@ -97,16 +97,16 @@ This function is called by `org-babel-execute-src-block'."
 (after! org
 
   ;;Appearence
-  (custom-set-faces!
-    '(org-document-title :height 1.3)
-    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
-    '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
-    '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
-    '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
-    '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
-    '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
-    '(org-level-7 :inherit outline-7 :weight semi-bold)
-    '(org-level-8 :inherit outline-8 :weight semi-bold))
+  ;; (custom-set-faces!
+  ;;   '(org-document-title :height 1.3)
+  ;;   '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
+  ;;   '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
+  ;;   '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
+  ;;   '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
+  ;;   '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
+  ;;   '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
+  ;;   '(org-level-7 :inherit outline-7 :weight semi-bold)
+  ;;   '(org-level-8 :inherit outline-8 :weight semi-bold))
   (setq! org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-hide-leading-stars nil
