@@ -72,18 +72,18 @@
   (let ((filename (format-time-string "%Y-%m-%d.org")))
     (if (file-exists-p (concat "~/Sync/Notes/daily/" filename))
         "\n* %?" ; If file exists
-        "#+TITLE: %<%Y-%m-%d>\n\n* %?" ; If file does not exist
+      "#+TITLE: %<%Y-%m-%d>\n\n* %?" ; If file does not exist
       )))
 
 (defun my/open-journal-today ()
- "Open today's journal file or create it if it doesn't exist."
+  "Open today's journal file or create it if it doesn't exist."
   (interactive)
   (let ((journal-dir "/home/struan/Sync/Notes/daily/")
         (today-filename (format-time-string "%Y-%m-%d.org")))
     (let ((full-path (concat journal-dir today-filename)))
       (if (not (file-exists-p full-path))
           (write-region (concat "#+TITLE: " (format-time-string "%Y-%m-%d") "\n\n* ") nil full-path))
-        (find-file full-path))))
+      (find-file full-path))))
 
 (defun org-babel-execute:chess (body)
   "Execute a block of Chess code with org-babel.
@@ -114,13 +114,13 @@ This function is called by `org-babel-execute-src-block'."
     '(org-level-8 :inherit outline-7 :family "Inter Display" :weight semi-bold))
 
   (setq! org-hide-emphasis-markers t
-        org-src-fontify-natively t
-        org-hide-leading-stars nil
-        org-startup-indented nil
-        org-startup-folded t
-        org-startup-with-latex-preview t
-        org-edit-src-content-indentation 0
-        org-src-window-setup 'current-window)
+         org-src-fontify-natively t
+         org-hide-leading-stars nil
+         org-startup-indented nil
+         org-startup-folded t
+         org-startup-with-latex-preview t
+         org-edit-src-content-indentation 0
+         org-src-window-setup 'current-window)
 
   ;; Automatically use mixed pitch mode
   (add-hook 'org-mode-hook 'mixed-pitch-mode)
@@ -134,7 +134,7 @@ This function is called by `org-babel-execute-src-block'."
         '(("j" "Journal Entry"
            plain (file (lambda () (concat "/home/struan/Sync/Notes/daily/"
                                           (format-time-string "%Y-%m-%d.org"))))
-         (function my/journal-file-title-setup))
+           (function my/journal-file-title-setup))
           ("m" "Minutes"
            plain (file (lambda () (format-time-string "/home/struan/Sync/Notes/Projects/Doctorate/Minutes/%Y-%m-%d/minutes.org")))
            "#+TITLE: Minutes\n#+DATE: %U\n#+SUBTITLE: %<%d-%m-%Y>\n#+OPTIONS: toc:nil\n\n *Struan, %? in attendance* \n\n\n\n* TODO Actions for next meeting [/]\n  - [ ] ")))
@@ -160,49 +160,49 @@ This function is called by `org-babel-execute-src-block'."
           (directory-files-recursively "~/Sync/Notes" org-agenda-file-regexp)))
   (add-hook 'org-agenda-mode-hook #'refresh-org-agenda-files)
 
-)
+  )
 
 ;; Org export to pdf
 (map! :map org-mode-map
-         "M-p"  'org-latex-export-to-pdf)
+      "M-p"  'org-latex-export-to-pdf)
 
 ;; Org-Roam config
 (use-package! org-roam
   :after org
   :config
-        ;;Directory containing roam files
-        (setq org-roam-directory "/home/struan/Sync/Roam")
+  ;;Directory containing roam files
+  (setq org-roam-directory "/home/struan/Sync/Roam")
 
-        ;; https://jethrokuan.github.io/org-roam-guide/
-        (setq org-roam-capture-templates
-              '(("m" "main" plain "%?"
-                :if-new (file+head "main/${slug}.org"
-                                   "#+title: ${title}\n")
-                :immediate-finish t
-                :unnarrowed t)
+  ;; https://jethrokuan.github.io/org-roam-guide/
+  (setq org-roam-capture-templates
+        '(("m" "main" plain "%?"
+           :if-new (file+head "main/${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
 
-                ("r" "literature note" plain "%?"
-                :if-new (file+head "reference/${title}.org" "#+title: ${title}\n")
-                :immediate-finish t
-                :unnarrowed t)
-                ("n" "literature note (citation)" plain "%?"
-                    :if-new (file+head
+          ("r" "literature note" plain "%?"
+           :if-new (file+head "reference/${title}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("n" "literature note (citation)" plain "%?"
+           :if-new (file+head
                     "reference/${citar-citekey}.org"
                     "#+title: ${note-title}\n\n[cite:@${citar-citekey}]")
-                    :immediate-finish t
-                    :unnarrowed t)))
+           :immediate-finish t
+           :unnarrowed t)))
 
-                (cl-defmethod org-roam-node-type ((node org-roam-node))
-                "Return the TYPE of NODE."
-                        (condition-case nil
-                                (file-name-nondirectory
-                                        (directory-file-name
-                                                (file-name-directory
-                                                        (file-relative-name (org-roam-node-file node) org-roam-directory))))
-                                (error "")))
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE."
+    (condition-case nil
+        (file-name-nondirectory
+         (directory-file-name
+          (file-name-directory
+           (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (error "")))
 
-                (setq org-roam-node-display-template
-                        (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
+  (setq org-roam-node-display-template
+        (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
 
 ;; Citar config
 (use-package! citar
@@ -258,7 +258,7 @@ This function is called by `org-babel-execute-src-block'."
 ;; (setenv "JULIA_NUM_THREADS" "auto")
 
 ;; (after! julia-repl
-  ;; (julia-repl-set-terminal-backend 'vterm))
+;; (julia-repl-set-terminal-backend 'vterm))
 
 ;;;;;;;;;;;;;;;; Python Config ;;;;;;;;;;;;;;;;;;;
 (setenv "PIPENV_VERBOSITY" "-1")
