@@ -98,6 +98,48 @@ This function is called by `org-babel-execute-src-block'."
     (shell-command cmd)
     (org-babel-result-to-file output-file)))
 
+;; Auto tag latex equation with correct number
+;; Credit: https://kitchingroup.cheme.cmu.edu/blog/2016/11/07/Better-equation-numbering-in-LaTeX-fragments-in-org-mode/
+(defun org-renumber-environment (orig-func &rest args)
+  (let ((results '())
+        (counter -1)
+        (numberp))
+
+    (setq results (cl-loop for (begin .  env) in
+                           (org-element-map (org-element-parse-buffer) 'latex-environment
+                             (lambda (env)
+                               (cons
+                                (org-element-property :begin env)
+                                (org-element-property :value env))))
+                           collect
+                           (cond
+                            ((and (string-match "\\\\begin{equation}" env)
+                                  (not (string-match "\\\\tag{" env)))
+                             (cl-incf counter)
+                             (cons begin counter))
+                            ((string-match "\\\\begin{align}" env)
+                             (prog2
+                                 (cl-incf counter)
+                                 (cons begin counter)
+                               (with-temp-buffer
+                                 (insert env)
+                                 (goto-char (point-min))
+                                 ;; \\ is used for a new line. Each one leads to a number
+                                 (cl-incf counter (count-matches "\\\\$"))
+                                 ;; unless there are nonumbers.
+                                 (goto-char (point-min))
+                                 (cl-decf counter (count-matches "\\nonumber")))))
+                            (t
+                             (cons begin nil)))))
+
+    (when (setq numberp (cdr (assoc (point) results)))
+      (setf (car args)
+            (concat
+             (format "\\setcounter{equation}{%s}\n" numberp)
+             (car args)))))
+
+  (apply orig-func args))
+
 (after! org
 
   ;;Appearence
@@ -145,8 +187,15 @@ This function is called by `org-babel-execute-src-block'."
   ;; Scale latex fragments for laptop, hacky but couldnt think of a way to calculate DPI
   ;; A potential fix would be to calculate DPI from Hyprland scale factor
   ;; Higher Hyprland scale = lower latex scale
-  (if (string= (system-name) "nixlaptop")
+  ;; (if (string= (system-name) "nixlaptop")
+  (if (string= (system-name) "neon")
       (setq org-format-latex-options (plist-put org-format-latex-options :scale 0.5)))
+
+  ;; Convert latex fragments to SVG for crispiness
+  (setq org-preview-latex-default-process 'dvisvgm)
+
+  ;; Auto renumber equations
+  (advice-add 'org-create-formula-image :around #'org-renumber-environment)
 
   ;; Load "chess" language to allow for chess boards to be rendered
   (org-babel-do-load-languages
