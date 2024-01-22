@@ -272,10 +272,10 @@ This function is called by `org-babel-execute-src-block'."
                  citar-org-roam-capture-template-key "n")))
 
 ;; Automatically enter fragtog mode
-(use-package! org-fragtog
-  :after org
-  :hook (org-mode . org-fragtog-mode)
-  )
+;; (use-package! org-fragtog
+;;   :after org
+;;   :hook (org-mode . org-fragtog-mode)
+;;   )
 
 ;; Automatically enter appear mode
 (use-package! org-appear
