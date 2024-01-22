@@ -61,7 +61,7 @@
 
 ;; Extend time before autocomplete
 (after! company
-  (setq company-idle-delay 2.5))
+  (setq company-idle-delay 0.5))
 
 ;; Disable invasive lsp-mode features
 (after! lsp-ui
