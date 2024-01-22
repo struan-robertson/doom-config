@@ -3,8 +3,12 @@
 ;;;;;;;;;;;;;;;; Doom Config ;;;;;;;;;;;;;;;;;;;
 
 ;; Doom fonts
-(setq doom-font (font-spec :family "Fira Code" :size 16)
-      doom-variable-pitch-font (font-spec :family "Inter" :size 18))
+(setq doom-font (font-spec :family "Fira Code" :size 16))
+
+;; Annoyingly Inter is called "Inter Variable" on Ubuntu and "Inter" on Nix
+(if (string= (system-name) "neon")
+        (setq doom-variable-pitch-font (font-spec :family "Inter Variable" :size 18))
+    (setq doom-variable-pitch-font (font-spec :family "Inter" :size 18)))
 
 ;; Use Fish shell
 (setq shell-file-name (executable-find "bash"))
