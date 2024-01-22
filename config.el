@@ -55,12 +55,18 @@
 ;; Disable exit confirmation
 (setq confirm-kill-emacs nil)
 
-;; Disable massive lsp docs
-(setq lsp-ui-doc-enable nil)
-
 ;; Load ssh-agent for laptop
 ;; (if (string= (system-name) "nixlaptop")
 ;;     (setenv "SSH_AUTH_SOCK" "/run/user/1000/ssh-agent.socket"))
+
+;; Extend time before autocomplete
+(after! company
+  (setq company-idle-delay 2.5))
+
+;; Disable invasive lsp-mode features
+(after! lsp-ui
+  (setq lsp-ui-sideline-enable nil  ; no more useful than flycheck
+        lsp-ui-doc-enable nil))     ; redundant with K
 
 ;;;;;;;;;;;;;;;; Org Config ;;;;;;;;;;;;;;;;;;;
 
