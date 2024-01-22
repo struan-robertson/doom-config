@@ -26,8 +26,8 @@
 ;; Doom theme
 (setq doom-theme 'doom-nord)
 
-;; Display relative line numbers
-(setq display-line-numbers-type 'relative)
+;; Lets try use text based searching rather than line numbers
+(setq display-line-numbers-type nil)
 
 ;; Dont display line numbers in text mode
 (remove-hook! 'text-mode-hook
