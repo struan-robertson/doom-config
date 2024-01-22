@@ -198,6 +198,8 @@ This function is called by `org-babel-execute-src-block'."
       (setq org-format-latex-options (plist-put org-format-latex-options :scale 0.5)))
 
   ;; Convert latex fragments to SVG for crispiness
+  ;; Slows things down a lot so maybe dont use for desktop
+  ;; Also could use normal process at a higher res and then scale down
   (setq org-preview-latex-default-process 'dvisvgm)
 
   ;; Auto renumber equations
