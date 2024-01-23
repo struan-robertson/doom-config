@@ -98,6 +98,30 @@ _h_ decrease width    _l_ increase width
   :prefix "w"
   :desc "Hydra resize" :n "SPC" #'doom-window-resize-hydra/body))
 
+;;Use evil bindings to control vterm
+
+(defun +press/down-key ()
+  (interactive)
+  (vterm-send-key "<down>"))
+
+(defun +press/up-key ()
+  (interactive)
+  (vterm-send-key "<up>"))
+
+(defun +press/left-key ()
+  (interactive)
+  (vterm-send-key "<left>"))
+
+(defun +press/right-key ()
+  (interactive)
+  (vterm-send-key "<right>"))
+
+(map! :after vterm
+      :map vterm-mode-map
+      :ni "C-k" #'+press/up-key
+      :ni "C-j" #'+press/down-key
+      :ni "C-h" #'+press/left-key
+      :ni "C-l" #'+press/right-key)
 
 ;; Debugging
 (after! dap-mode
