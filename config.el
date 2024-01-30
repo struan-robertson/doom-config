@@ -181,7 +181,9 @@ _h_ decrease width    _l_ increase width
 
 ;; (setq lsp-julia-package-dir nil)
 ;; (setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
-;; (setenv "JULIA_NUM_THREADS" "auto")
+(setenv "JULIA_NUM_THREADS" "auto")
+(after! lsp-julia
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.10"))
 
 ;; (after! julia-repl
 ;; (julia-repl-set-terminal-backend 'vterm))
