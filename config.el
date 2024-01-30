@@ -175,8 +175,6 @@ _h_ decrease width    _l_ increase width
  "C-f" #'avy-goto-char-2
  :nv "C-f" #'avy-goto-char-2)
 
-;; TODO implement kitty remote control for sending buffer and buffer text to external kitty window, creating one if it doesnt exist
-;; TODO command to open IPython/Julia REPL in external terminal at current directory
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
 ;; (setq lsp-julia-package-dir nil)
