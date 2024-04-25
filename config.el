@@ -30,7 +30,15 @@
       user-mail-address "contact@struanrobertson.co.uk")
 
 ;; Doom theme
-(setq doom-theme 'doom-nord)
+;; (setq doom-theme 'doom-nord)
+(use-package! doom-nano-modeline
+  :config
+  (doom-nano-modeline-mode 1)
+  (global-hide-mode-line-mode 1))
+
+
+(after! doom-themes
+  (load-theme 'doom-nano-dark t))
 
 ;; Lets try use text based searching rather than line numbers
 (setq display-line-numbers-type nil)
@@ -67,7 +75,7 @@
 
 ;; Extend time before autocomplete
 (after! company
-  (setq company-idle-delay 0.5))
+  (setq company-idle-delay nil))
 
 ;; Disable invasive lsp-mode features
 (after! lsp-ui

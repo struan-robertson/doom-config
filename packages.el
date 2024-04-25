@@ -18,3 +18,7 @@
 
 ;; Just mode syntax highlighting
 (package! just-mode)
+
+(package! doom-nano-modeline
+  :recipe (:host github
+  :repo "ronisbr/doom-nano-modeline"))
