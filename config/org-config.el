@@ -117,7 +117,12 @@ This function is called by `org-babel-execute-src-block'."
            (function my/journal-file-title-setup))
           ("m" "Minutes"
            plain (file (lambda () (format-time-string "/home/struan/Sync/Notes/Projects/Doctorate/Minutes/%Y-%m-%d/minutes.org")))
-           "#+TITLE: Minutes\n#+DATE: %U\n#+SUBTITLE: %<%d-%m-%Y>\n#+OPTIONS: toc:nil\n\n *Struan, %? in attendance* \n\n\n\n* TODO Actions for next meeting [/]\n  - [ ] ")))
+           "#+TITLE: Minutes\n#+DATE: %U\n#+SUBTITLE: %<%d-%m-%Y>\n#+OPTIONS: toc:nil\n\n *Struan, %? in attendance* \n\n\n\n* TODO Actions for next meeting [/]\n  - [ ] ")("m" "Minutes"
+           plain (file (lambda () (format-time-string "/home/struan/Sync/Notes/Projects/Doctorate/Minutes/%Y-%m-%d/minutes.org")))
+           "#+TITLE: Minutes\n#+DATE: %U\n#+SUBTITLE: %<%d-%m-%Y>\n#+OPTIONS: toc:nil\n\n *Struan, %? in attendance* \n\n\n\n* TODO Actions for next meeting [/]\n  - [ ] ")
+           ("u" "Upcoming Meeting"
+           plain (file (lambda () (format-time-string "/home/struan/Sync/Notes/Projects/Doctorate/Upcoming Meeting/%Y-%m-%d/upcoming.org")))
+           "#+TITLE: Upcoming Meeting\n\n %? in attendance*")))
 
   ;; Global bibliography
   (setq org-cite-global-bibliography '("/home/struan/Sync/Roam/biblio.bib"))

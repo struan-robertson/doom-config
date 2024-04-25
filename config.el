@@ -6,6 +6,8 @@
 
 (load "org-config")
 
+;; TRAMP Config
+(setq tramp-auto-save-directory "~/.config/emacs/.local/backup")
 ;;;;;;;;;;;;;;;; Doom Config ;;;;;;;;;;;;;;;;;;;
 
 ;; Doom fonts
@@ -177,9 +179,9 @@ _h_ decrease width    _l_ increase width
 
 ;;;;;;;;;;;;;;;; Julia Config ;;;;;;;;;;;;;;;;;;;
 
-;; (setq lsp-julia-package-dir nil)
 ;; (setq lsp-julia-flags `("-J/home/struan/Development/Julia/languageserver.so"))
 (setenv "JULIA_NUM_THREADS" "auto")
+(setq lsp-julia-package-dir nil)
 (after! lsp-julia
   (setq lsp-julia-default-environment "~/.julia/environments/v1.10"))
 
